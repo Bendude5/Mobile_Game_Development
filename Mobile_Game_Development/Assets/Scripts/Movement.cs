@@ -20,36 +20,46 @@ public class Movement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        playerTransfom.transform.position = new Vector3(playerx, playery, playerz);
+        //playerTransfom.transform.position = new Vector3(playerx, playery, playerz);
 
-        //transform.position += Vector3.forward * speed * Time.deltaTime;
+        transform.position += Vector3.forward * speed * Time.fixedDeltaTime;
 
-        playerz += speed;
+        //playerz += speed;
 
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            //playerTransfom.transform.position = new Vector3(1, 0, 0);
-            playerx -= 2.5f;
-        }
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    //playerTransfom.transform.position = new Vector3(1, 0, 0);
+        //    playerx -= 2.5f;
+        //}
 
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            //playerTransfom.transform.position = new Vector3(-1, 0, 0);
-            playerx += 2.5f;
-        }
+        //if (Input.GetKeyDown(KeyCode.D))
+        //{
+        //    //playerTransfom.transform.position = new Vector3(-1, 0, 0);
+        //    playerx += 2.5f;
+        //}
 
-        if (playerx >= 2.5f)
-        {
-            playerx = 2.5f;
-        }
+        //if (playerx >= 2.5f)
+        //{
+        //    playerx = 2.5f;
+        //}
 
-        if (playerx <= -2.5f)
-        {
-            playerx = -2.5f;
-        }
+        //if (playerx <= -2.5f)
+        //{
+        //    playerx = -2.5f;
+        //}
 
     }
+
+    //public void moveLeft()
+    //{
+    //    playerx -= 2.5f;
+    //}
+
+    //public void moveRight()
+    //{
+    //    playerx += 2.5f;
+    //}
 }
