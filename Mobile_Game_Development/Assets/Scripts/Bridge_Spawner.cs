@@ -36,6 +36,7 @@ public class Bridge_Spawner : MonoBehaviour
         {
             //This checks to see if the collision made was with player attack
             case "Player":
+                Debug.Log("New Bridge");
                 //GameObject bridge = Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity);
                 Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity);
                 Destroy(prefab, 20);
