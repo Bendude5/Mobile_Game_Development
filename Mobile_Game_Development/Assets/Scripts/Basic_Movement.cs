@@ -14,6 +14,7 @@ public class Basic_Movement : MonoBehaviour
     public float playery;
     public float playerz;
     public float jumpSpeed = 0;
+    public bool canJump;
 
     public int maxHealth = 100;
     public int currentHealth;
@@ -39,6 +40,7 @@ public class Basic_Movement : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
 
         jumpSpeed = 0.0f;
+        canJump = true;
 
         //SHAKE
         lowPassFilterFactor = accelerometerUpdateInterval / lowPassKernelWidthInSeconds;
@@ -106,7 +108,11 @@ public class Basic_Movement : MonoBehaviour
             // Perform your "shaking actions" here. If necessary, add suitable
             // guards in the if check above to avoid redundant handling during
             // the same shake (e.g. a minimum refractory period).
-            this.jump();
+            if (canJump == true)
+            {
+                this.jump();
+                canJump = false;
+            }
             Debug.Log("Shake event detected at time ");
         }
 
@@ -117,11 +123,12 @@ public class Basic_Movement : MonoBehaviour
         playery += jumpSpeed;
         if (playery >= 16.215f)
         {
-            jumpSpeed = -0.2f;
+            jumpSpeed = -0.3f;
         }
 
         if (playery <= 11.215f)
         {
+            canJump = true;
             jumpSpeed = 0.0f;
         }
 
@@ -147,7 +154,7 @@ public class Basic_Movement : MonoBehaviour
 
     public void jump()
     {
-        jumpSpeed = 0.2f;
+        jumpSpeed = 0.3f;
     }
 
     public void takeDamage(int damage)
