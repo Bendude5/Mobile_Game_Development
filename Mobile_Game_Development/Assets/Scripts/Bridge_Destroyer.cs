@@ -12,7 +12,7 @@ public class Bridge_Destroyer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timer = 500;
+        timer = 2500;
     }
 
     // Update is called once per frame

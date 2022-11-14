@@ -39,7 +39,7 @@ public class Bridge_Spawner : MonoBehaviour
                 Debug.Log("New Bridge");
                 //GameObject bridge = Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity);
                 Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity);
-                Destroy(prefab, 20);
+                Destroy(prefab, 1000);
                 break;
         }
     }

@@ -16,7 +16,7 @@ public class Obstacle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Destroy(thisObject, 20);
+        Destroy(thisObject, 80);
     }
 
     public void OnTriggerEnter(Collider collision)

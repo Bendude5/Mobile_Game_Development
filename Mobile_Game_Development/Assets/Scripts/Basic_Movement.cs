@@ -10,6 +10,8 @@ public class Basic_Movement : MonoBehaviour
     public Transform playerTransfom;
     public Vector3 playerPos;
 
+    public Animator anim;
+
     public float playerx;
     public float playery;
     public float playerz;
@@ -46,7 +48,14 @@ public class Basic_Movement : MonoBehaviour
         lowPassFilterFactor = accelerometerUpdateInterval / lowPassKernelWidthInSeconds;
         shakeDetectionThreshold *= shakeDetectionThreshold;
         lowPassValue = Input.acceleration;
+
+        //Time.timeScale = 5;
     }
+
+    //void Update()
+    //{
+    //    transform.Translate(Vector3.forward * speed * Time.deltaTime);
+    //}
 
     // Update is called once per frame
     void FixedUpdate()
@@ -92,7 +101,7 @@ public class Basic_Movement : MonoBehaviour
         {
             if (canPlayerDie == true)
             {
-                this.loadlevel("GameOver");
+                anim.SetTrigger("Death");
             }
         }
 
@@ -163,6 +172,12 @@ public class Basic_Movement : MonoBehaviour
 
         healthBar.SetHealth(currentHealth);
         Debug.Log("Damge");
+    }
+
+
+    public void GameOver()
+    {
+        this.loadlevel("GameOver");
     }
 
 
