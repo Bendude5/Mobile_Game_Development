@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Basic_Movement : MonoBehaviour
@@ -9,6 +10,8 @@ public class Basic_Movement : MonoBehaviour
     public GameObject player;
     public Transform playerTransfom;
     public Vector3 playerPos;
+
+    public Slider slider;
 
     public Animator anim;
 
@@ -140,6 +143,8 @@ public class Basic_Movement : MonoBehaviour
             canJump = true;
             jumpSpeed = 0.0f;
         }
+
+        playerx = slider.value;
 
     }
 
