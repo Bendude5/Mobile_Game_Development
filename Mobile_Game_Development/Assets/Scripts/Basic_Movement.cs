@@ -15,6 +15,9 @@ public class Basic_Movement : MonoBehaviour
 
     public Animator anim;
 
+    public GameObject adObject;
+    public CameraShake cameraShake;
+
     public float playerx;
     public float playery;
     public float playerz;
@@ -27,13 +30,11 @@ public class Basic_Movement : MonoBehaviour
     public Health_Bar healthBar;
     public bool canPlayerDie;
 
+    public bool canPlayAd;
+
     //SHAKE
     float accelerometerUpdateInterval = 1.0f / 60.0f;
-    // The greater the value of LowPassKernelWidthInSeconds, the slower the
-    // filtered value will converge towards current input sample (and vice versa).
     float lowPassKernelWidthInSeconds = 1.0f;
-    // This next parameter is initialized to 2.0 per Apple's recommendation,
-    // or at least according to Brady! ;)
     float shakeDetectionThreshold = 2.0f;
     float lowPassFilterFactor;
     Vector3 lowPassValue;
@@ -41,6 +42,8 @@ public class Basic_Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //adObject.GetComponent<AdsManager>().playAd();
+
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
 
@@ -55,10 +58,13 @@ public class Basic_Movement : MonoBehaviour
         //Time.timeScale = 5;
     }
 
-    //void Update()
-    //{
-    //    transform.Translate(Vector3.forward * speed * Time.deltaTime);
-    //}
+    void Update()
+    {
+        if (canPlayAd == true)
+        {
+            adObject.GetComponent<AdsManager>().playAd();
+        }
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -174,7 +180,7 @@ public class Basic_Movement : MonoBehaviour
     public void takeDamage(int damage)
     {
         currentHealth -= damage;
-
+        StartCoroutine(cameraShake.Shake(0.15f, 0.4f));
         healthBar.SetHealth(currentHealth);
         Debug.Log("Damge");
     }

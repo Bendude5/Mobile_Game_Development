@@ -13,12 +13,6 @@ public class Score : MonoBehaviour
     public GameObject player;
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -27,5 +21,29 @@ public class Score : MonoBehaviour
             scoreValue += 1;
             _score.text = "Score: " + scoreValue;
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            this.SaveScore();
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            this.LoadScore();
+        }
+    }
+
+    public void SaveScore()
+    {
+        Debug.Log("Save Score");
+        SaveSystem.saveScore(this);
+    }
+
+    public void LoadScore()
+    {
+        Debug.Log("Load Score");
+        PlayerData data = SaveSystem.LoadScore();
+
+        scoreValue = data.savedScore;
     }
 }

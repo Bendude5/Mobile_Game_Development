@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     public GameObject player;
     public Transform playerTransfom;
     public Vector3 playerPos;
+    public GameObject adObject;
 
     public float playerx;
     public float playery;
@@ -16,7 +17,7 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        adObject.GetComponent<AdsManager>().playAd();
     }
 
     // Update is called once per frame

@@ -18,6 +18,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         if (Advertisement.IsReady("Interstitial_Android"))
         {
             Advertisement.Show("Interstitial_Android");
+            GameObject.Find("Player").GetComponent<Basic_Movement>().canPlayAd = false;
         }
     }
 

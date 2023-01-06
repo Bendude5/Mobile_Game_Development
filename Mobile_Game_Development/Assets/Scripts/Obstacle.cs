@@ -5,12 +5,14 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
     public GameObject thisObject;
+    public GameObject childObject;
+    Animator anim;
     public int damage;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        anim = childObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -26,6 +28,7 @@ public class Obstacle : MonoBehaviour
         {
             //This checks to see if the collision made was with player attack
             case "Player":
+                anim.SetInteger("Anim_Number", 2);
                 GameObject.FindGameObjectWithTag("Player").GetComponent<Basic_Movement>().takeDamage(damage);
                 break;
         }
