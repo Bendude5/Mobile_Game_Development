@@ -6,8 +6,9 @@ public class Obstacle_Spawner : MonoBehaviour
 {
 
     public Transform thisGameObject;
-    public GameObject prefab;
-    public GameObject prefab2;
+    public GameObject scoreObject;
+    public GameObject damageObject;
+    public GameObject damagePillar;
 
     public float x;
     public float y;
@@ -21,9 +22,9 @@ public class Obstacle_Spawner : MonoBehaviour
     {
         y = thisGameObject.position.y;
         z = thisGameObject.position.z;
-        enemyType = Random.Range(1, 11);
+        enemyType = Random.Range(1, 12);
 
-        if (enemyType != 3)
+        if (enemyType <= 5)
         {
             spawnNumber = Random.Range(1, 4);
 
@@ -46,7 +47,32 @@ public class Obstacle_Spawner : MonoBehaviour
         }
 
 
-        else if (enemyType == 3)
+
+        else if (enemyType >= 7)
+        {
+            spawnNumber = Random.Range(1, 4);
+
+            if (spawnNumber == 1)
+            {
+                x = thisGameObject.position.x;
+            }
+
+            if (spawnNumber == 2)
+            {
+                x = thisGameObject.position.x + 2.5f;
+            }
+
+            if (spawnNumber == 3)
+            {
+                x = thisGameObject.position.x - 2.5f;
+            }
+
+            this.spawnPillar();
+        }
+
+
+
+        else if (enemyType == 6)
         {
             this.spawnLongPrefab();
             x = thisGameObject.position.x;
@@ -63,12 +89,17 @@ public class Obstacle_Spawner : MonoBehaviour
 
     public void spawnPrefab()
     {
-        GameObject bullet = Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity);
+        GameObject bullet = Instantiate(scoreObject, new Vector3(x, y, z), Quaternion.identity);
     }
 
     public void spawnLongPrefab()
     {
-        GameObject bullet = Instantiate(prefab2, new Vector3(x, y, z), Quaternion.identity);
+        GameObject bullet = Instantiate(damageObject, new Vector3(x, y, z), Quaternion.identity);
+    }
+
+    public void spawnPillar()
+    {
+        GameObject bullet = Instantiate(damagePillar, new Vector3(x, y, z), Quaternion.identity);
     }
 
 }

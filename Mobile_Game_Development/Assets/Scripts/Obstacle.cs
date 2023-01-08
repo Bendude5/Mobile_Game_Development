@@ -6,6 +6,7 @@ public class Obstacle : MonoBehaviour
 {
     public GameObject thisObject;
     public GameObject childObject;
+    public bool badObject;
     Animator anim;
     public int damage;
 
@@ -28,8 +29,17 @@ public class Obstacle : MonoBehaviour
         {
             //This checks to see if the collision made was with player attack
             case "Player":
-                anim.SetInteger("Anim_Number", 2);
-                GameObject.FindGameObjectWithTag("Player").GetComponent<Basic_Movement>().takeDamage(damage);
+                if (badObject == true)
+                {
+                    anim.SetInteger("Anim_Number", 2);
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Basic_Movement>().takeDamage(damage);
+                }
+
+                if (badObject == false)
+                {
+                    anim.SetInteger("Anim_Number", 2);
+                    GameObject.Find("Score").GetComponent<Score>().AddScore(10);
+                }
                 break;
         }
     }

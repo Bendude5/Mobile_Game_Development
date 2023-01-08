@@ -66,4 +66,9 @@ public class RealWorldWeather : MonoBehaviour {
 		return weather;
 	}
 
+    void Update()
+    {
+		Debug.Log(city);
+    }
+
 }

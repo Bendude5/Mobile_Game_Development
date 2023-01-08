@@ -113,6 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisObject: {fileID: 3194888590612964317}
   childObject: {fileID: 5136531553083183841}
+  badObject: 1
   damage: 10
 --- !u!1001 &5443103632639061936
 PrefabInstance:

@@ -9,6 +9,6 @@ public class PlayerData
 
     public PlayerData (Score scoreObject)
     {
-        savedScore = scoreObject.scoreValue;
+        savedScore = scoreObject.highScore;
     }
 }

@@ -7,10 +7,19 @@ public class Score : MonoBehaviour
 {
 
     [SerializeField]
+    private Text _highScore;
+    [SerializeField]
     private Text _score;
+    public int highScore;
     public int scoreValue;
+    public CameraShake cameraShake;
 
     public GameObject player;
+
+    void Start()
+    {
+        this.LoadScore();
+    }
 
 
     // Update is called once per frame
@@ -18,19 +27,21 @@ public class Score : MonoBehaviour
     {
         if (player.GetComponent<Pause>().isPaused == false)
         {
-            scoreValue += 1;
             _score.text = "Score: " + scoreValue;
-        }
+            _highScore.text = "Highscore: " + highScore;
 
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            this.SaveScore();
+            if (scoreValue >= highScore)
+            {
+                highScore = scoreValue;
+                this.SaveScore();
+            }
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            this.LoadScore();
-        }
+    public void AddScore(int scoreAmount)
+    {
+        StartCoroutine(cameraShake.Shake(0.15f, 0.4f));
+        scoreValue += scoreAmount;
     }
 
     public void SaveScore()
@@ -44,6 +55,12 @@ public class Score : MonoBehaviour
         Debug.Log("Load Score");
         PlayerData data = SaveSystem.LoadScore();
 
-        scoreValue = data.savedScore;
+        highScore = data.savedScore;
+        _highScore.text = "Highscore: " + data.savedScore;
+    }
+
+    public void ResetHighScore()
+    {
+        highScore = 0;
     }
 }
