@@ -29,6 +29,7 @@ public class Bridge_Spawner : MonoBehaviour
         z = thisGameObject.position.z + 432.5f;
     }
 
+    //When it collides with the player, it spawns a new bridge
     public void OnTriggerEnter(Collider collision)
     {
         //This code is for when a collision is made

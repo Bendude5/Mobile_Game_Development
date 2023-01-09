@@ -6,6 +6,9 @@ using UnityEngine.Advertisements;
 public class AdsManager : MonoBehaviour, IUnityAdsListener
 {
     // Start is called before the first frame update
+
+    public GameObject player;
+
     void Start()
     {
         Advertisement.Initialize("4996703");
@@ -13,6 +16,17 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         showBanner();
     }
 
+    public void RemoveListener()
+    {
+
+    }
+
+    void Update()
+    {
+
+    }
+
+    //Plays normal advert
     public void playAd()
     {
         if (Advertisement.IsReady("Interstitial_Android"))
@@ -22,6 +36,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         }
     }
 
+    //Plays reward advert
     public void playRewardedAd()
     {
         if (Advertisement.IsReady("Rewarded_Android"))
@@ -34,6 +49,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         }
     }
 
+    //Shows banner
     public void showBanner()
     {
         if (Advertisement.IsReady("Banner_Android"))
@@ -47,6 +63,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         }
     }
 
+    //Hides banner
     public void hideBanner()
     {
         Advertisement.Banner.Hide();
@@ -75,11 +92,22 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         Debug.Log("VIDEO STARTED");
     }
 
+    //When reward ad is done, it will give reward
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
     {
         if (placementId == "Rewarded_Android" && showResult == ShowResult.Finished)
         {
+            Time.timeScale = 1;
+            player.GetComponent<Basic_Movement>().gameOver.SetActive(false);
+            player.GetComponent<Basic_Movement>().anim.SetInteger("Anim_Number", 1);
+            player.GetComponent<Basic_Movement>().currentHealth = 100;
+            player.GetComponent<Basic_Movement>().canRestart = false;
             Debug.Log("PLAYER SHOULD BE REWARDED!");
         }
+    }
+
+    public void OnDestroy()
+    {
+        Advertisement.RemoveListener(this);
     }
 }

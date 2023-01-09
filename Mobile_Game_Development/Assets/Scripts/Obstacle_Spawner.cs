@@ -20,10 +20,12 @@ public class Obstacle_Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Randomly generates a number, that number decides what object to spawn next with a random x position
         y = thisGameObject.position.y;
         z = thisGameObject.position.z;
         enemyType = Random.Range(1, 12);
 
+        //Spawns guard prefab
         if (enemyType <= 5)
         {
             spawnNumber = Random.Range(1, 4);
@@ -47,7 +49,7 @@ public class Obstacle_Spawner : MonoBehaviour
         }
 
 
-
+        //Spawns pillar prefab
         else if (enemyType >= 7)
         {
             spawnNumber = Random.Range(1, 4);
@@ -71,7 +73,7 @@ public class Obstacle_Spawner : MonoBehaviour
         }
 
 
-
+        //Spawns monster prefab
         else if (enemyType == 6)
         {
             this.spawnLongPrefab();
@@ -87,16 +89,19 @@ public class Obstacle_Spawner : MonoBehaviour
 
     }
 
+    //Spawn guard prefab
     public void spawnPrefab()
     {
         GameObject bullet = Instantiate(scoreObject, new Vector3(x, y, z), Quaternion.identity);
     }
 
+    //Spawn monster prefab
     public void spawnLongPrefab()
     {
         GameObject bullet = Instantiate(damageObject, new Vector3(x, y, z), Quaternion.identity);
     }
 
+    //Spawn pillar prefab
     public void spawnPillar()
     {
         GameObject bullet = Instantiate(damagePillar, new Vector3(x, y, z), Quaternion.identity);

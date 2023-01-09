@@ -8,16 +8,19 @@ using System.IO;
 
 public class WeatherController : MonoBehaviour
 {
-
+    //API key
     private const string API_KEY = "81fd2d142d2de0b2bd75174539558760";
     private const float API_CHECK_MAXTIME = 10 * 60.0f;
 
+    //Snow
     public GameObject snowSystem;
     public bool currentlySnowing = false;
 
+    //Rain
     public GameObject RainSystem;
     public bool currentlyRaining = false;
 
+    //Clouds
     public GameObject CloudSystem;
     public GameObject SunSystem;
 
@@ -25,8 +28,7 @@ public class WeatherController : MonoBehaviour
     public ParticleSystem Raining;
     public ParticleSystem Cloudy;
 
-    public int wasSunny = 0;
-
+    //Current City ID of player
     public string CityId;
 
     private float apiCheckCountdown = API_CHECK_MAXTIME;
@@ -36,18 +38,12 @@ public class WeatherController : MonoBehaviour
     {
         CheckWeatherStatus();
 
-        //// Check if the user has location service enabled.
-        //if (!Input.location.isEnabledByUser)
-        //    yield break;
-
-        // Starts the location service.
         Input.location.Start();
 
         Input.location.Stop();
 
     }
 
-        // Update is called once per frame
     void Update()
     {
         apiCheckCountdown -= Time.deltaTime;
@@ -64,6 +60,7 @@ public class WeatherController : MonoBehaviour
 
         string weather = GetWeather().weather[0].main;
 
+        //If it is snowing or there is sleet, it will activate the snow objects
         if (weather == "Snow" || weather == "Sleet")
         {
             snowSystem.SetActive(true);
@@ -76,17 +73,9 @@ public class WeatherController : MonoBehaviour
             CloudSystem.SetActive(false);
             Cloudy.Stop();
             SunSystem.SetActive(false);
-            if (wasSunny > 0)
-            {
-                wasSunny -= 1;
-            }
-
-            if (wasSunny == 1)
-            {
-                //pw
-            }
         }
 
+        //If it raining, it will activate the rain objects
         else if (weather == "Rain")
         {
             RainSystem.SetActive(true);
@@ -99,18 +88,9 @@ public class WeatherController : MonoBehaviour
             CloudSystem.SetActive(false);
             Cloudy.Stop();
             SunSystem.SetActive(false);
-
-            if (wasSunny > 0)
-            {
-                wasSunny -= 1;
-            }
-
-            if (wasSunny == 1)
-            {
-                //pm
-            }
         }
 
+        //If it is windy, cloudy, misty or there is fog, it will activate cloud objects
         else if (weather == "Wind" || weather == "Clouds" || weather == "Mist" || weather == "Fog")
         {
             CloudSystem.SetActive(true);
@@ -123,18 +103,9 @@ public class WeatherController : MonoBehaviour
             Raining.Stop();
             currentlyRaining = false;
             SunSystem.SetActive(false);
-
-            if (wasSunny > 0)
-            {
-                wasSunny -= 1;
-            }
-
-            if (wasSunny == 1)
-            {
-                //pm
-            }
         }
 
+        //If there is no weather, then it will deactivate all weather objects
         else
         {
             snowSystem.SetActive(false);
@@ -146,9 +117,6 @@ public class WeatherController : MonoBehaviour
             CloudSystem.SetActive(false);
             Cloudy.Stop();
             SunSystem.SetActive(true);
-
-            //pm
-            wasSunny = 2;
         }
     }
 
@@ -156,6 +124,7 @@ public class WeatherController : MonoBehaviour
 
     private WeatherInfo GetWeather()
     {
+        //Gets weather from online using the City ID and the API key
         HttpWebRequest request =
         (HttpWebRequest)WebRequest.Create(String.Format("http://api.openweathermap.org/data/2.5/weather?id=%7B0%7D&APPID=%7B1%7D",
          CityId, API_KEY));

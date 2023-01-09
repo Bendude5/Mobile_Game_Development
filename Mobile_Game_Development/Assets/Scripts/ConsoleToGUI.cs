@@ -11,11 +11,13 @@ namespace DebugStuff
 
         void OnEnable()
         {
+            //Shows debug log
             Application.logMessageReceived += Log;
         }
 
         void OnDisable()
         {
+            //Hides debug log
             Application.logMessageReceived -= Log;
         }
 

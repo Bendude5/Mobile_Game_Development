@@ -11,25 +11,32 @@ public class Basic_Movement : MonoBehaviour
     public Transform playerTransfom;
     public Vector3 playerPos;
 
+    //Movement slider
     public Slider slider;
 
     public Animator anim;
 
+    //Advert object
     public GameObject adObject;
+    //Camera shake
     public CameraShake cameraShake;
 
+    //Locations
     public float playerx;
     public float playery;
     public float playerz;
     public float jumpSpeed = 0;
     public bool canJump;
 
+    public GameObject gameOver;
+    public GameObject retryButton;
+
     public int maxHealth = 100;
     public int currentHealth;
 
     public Health_Bar healthBar;
     public bool canPlayerDie;
-
+    public bool canRestart;
     public bool canPlayAd;
 
     //SHAKE
@@ -42,8 +49,13 @@ public class Basic_Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //adObject.GetComponent<AdsManager>().playAd();
+        //Sets starting values
+        anim.SetInteger("Anim_Number", 1);
+        Time.timeScale = 1;
+        canRestart = true;
+        gameOver.SetActive(false);
 
+        //Health
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
 
@@ -54,14 +66,15 @@ public class Basic_Movement : MonoBehaviour
         lowPassFilterFactor = accelerometerUpdateInterval / lowPassKernelWidthInSeconds;
         shakeDetectionThreshold *= shakeDetectionThreshold;
         lowPassValue = Input.acceleration;
-
-        //Time.timeScale = 5;
     }
 
     void Update()
     {
+        healthBar.SetHealth(currentHealth);
+
         if (canPlayAd == true)
         {
+            //Plays ad when it can
             adObject.GetComponent<AdsManager>().playAd();
         }
     }
@@ -69,9 +82,8 @@ public class Basic_Movement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //Moves player forward
         playerTransfom.transform.position = new Vector3(playerx, playery, playerz);
-
-        //transform.position += Vector3.forward * speed * Time.fixedDeltaTime;
 
         playerz += speed;
 
@@ -81,7 +93,6 @@ public class Basic_Movement : MonoBehaviour
             if (playerx >= -2.0f)
             {
                 Debug.Log("A");
-                //playerTransfom.transform.position = new Vector3(1, 0, 0);
                 playerx -= 2.5f;
             }
         }
@@ -91,11 +102,11 @@ public class Basic_Movement : MonoBehaviour
             if (playerx <= 2.0f)
             {
                 Debug.Log("D");
-                //playerTransfom.transform.position = new Vector3(-1, 0, 0);
                 playerx += 2.5f;
             }
         }
 
+        //Stops player going off screen
         if (playerx >= 2.5f)
         {
             playerx = 2.5f;
@@ -110,7 +121,7 @@ public class Basic_Movement : MonoBehaviour
         {
             if (canPlayerDie == true)
             {
-                anim.SetTrigger("Death");
+                anim.SetInteger("Anim_Number", 2);
             }
         }
 
@@ -123,9 +134,6 @@ public class Basic_Movement : MonoBehaviour
 
         if (deltaAcceleration.sqrMagnitude >= shakeDetectionThreshold)
         {
-            // Perform your "shaking actions" here. If necessary, add suitable
-            // guards in the if check above to avoid redundant handling during
-            // the same shake (e.g. a minimum refractory period).
             if (canJump == true)
             {
                 this.jump();
@@ -154,11 +162,11 @@ public class Basic_Movement : MonoBehaviour
 
     }
 
+
     public void moveLeft()
     {
         if (playerx >= -2.0f)
         {
-            //playerTransfom.transform.position = new Vector3(1, 0, 0);
             playerx -= 2.5f;
         }
     }
@@ -167,16 +175,17 @@ public class Basic_Movement : MonoBehaviour
     {
         if (playerx <= 2.0f)
         {
-            //playerTransfom.transform.position = new Vector3(-1, 0, 0);
             playerx += 2.5f;
         }
     }
 
+    //Jump
     public void jump()
     {
         jumpSpeed = 0.3f;
     }
 
+    //Take damage, called from obstacles
     public void takeDamage(int damage)
     {
         currentHealth -= damage;
@@ -185,8 +194,30 @@ public class Basic_Movement : MonoBehaviour
         Debug.Log("Damge");
     }
 
-
+    //Game over
     public void GameOver()
+    {
+        gameOver.SetActive(true);
+        if (canRestart == false)
+        {
+            retryButton.SetActive(false);
+        }
+
+        if (canRestart == true)
+        {
+            retryButton.SetActive(true);
+        }
+        Time.timeScale = 0;
+    }
+
+    //If the player selects reward advert to respawn
+    public void CarryOn()
+    {
+        adObject.GetComponent<AdsManager>().playRewardedAd();
+        //this.loadlevel("GameOver");
+    }
+
+    public void ExitGame()
     {
         this.loadlevel("GameOver");
     }

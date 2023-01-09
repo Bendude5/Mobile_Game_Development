@@ -4,6 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
+    //Saves the score
     public static void saveScore(Score score)
     {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -16,6 +17,7 @@ public static class SaveSystem
         stream.Close();
     }
 
+    //Loads the score
     public static PlayerData LoadScore()
     {
         string path = Application.persistentDataPath + "/player.fun";
@@ -35,4 +37,17 @@ public static class SaveSystem
             return null;
         }
     }
+
+
+    //public static void saveTimer(WorldTimeAPI time)
+    //{
+    //    BinaryFormatter formatter = new BinaryFormatter();
+    //    string path = Application.persistentDataPath + "/player.fun";
+    //    FileStream stream = new FileStream(path, FileMode.Create);
+
+    //    PlayerData data = new PlayerData(time);
+
+    //    formatter.Serialize(stream, data);
+    //    stream.Close();
+    //}
 }

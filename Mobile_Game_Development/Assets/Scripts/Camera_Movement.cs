@@ -22,6 +22,7 @@ public class Camera_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Moves camera with the player
         thisTransfom.transform.position = new Vector3(thisx, thisy, thisz);
 
         thisz = playerTransfom.transform.position.z;

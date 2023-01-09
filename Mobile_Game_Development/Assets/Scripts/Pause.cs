@@ -10,6 +10,7 @@ public class Pause : MonoBehaviour
 
     private void Start()
     {
+        //Disables the pause menu at the start
         pauseMenu.SetActive(false);
         pauseButton.SetActive(true);
         isPaused = false;
@@ -17,6 +18,7 @@ public class Pause : MonoBehaviour
 
     public void pauseGame()
     {
+        //Activates the pause object and freezes the game
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
         pauseButton.SetActive(false);
@@ -25,6 +27,7 @@ public class Pause : MonoBehaviour
 
     public void unPauseGame()
     {
+        //Deactivates the pause object and unfreezes the game
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
         pauseButton.SetActive(true);

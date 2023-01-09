@@ -27,17 +27,20 @@ public class Obstacle : MonoBehaviour
         //This code is for when a collision is made
         switch (collision.tag)
         {
-            //This checks to see if the collision made was with player attack
+            //This checks to see if the collision made was with player and damages them
             case "Player":
                 if (badObject == true)
                 {
                     anim.SetInteger("Anim_Number", 2);
+                    childObject.GetComponent<PlayAudio>().soundFunction();
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Basic_Movement>().takeDamage(damage);
                 }
 
+                //This is for the guards, instead of damaging the player, they will add to their score
                 if (badObject == false)
                 {
                     anim.SetInteger("Anim_Number", 2);
+                    childObject.GetComponent<PlayAudio>().soundFunction();
                     GameObject.Find("Score").GetComponent<Score>().AddScore(10);
                 }
                 break;
